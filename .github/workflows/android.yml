@@ -18,11 +18,19 @@ jobs:
         with:
           node-version: 22
 
+      - name: Préparer les fichiers Web
+        run: |
+          mkdir www
+          cp index.html style.css app.js www/
+
       - name: Installer Capacitor
         run: |
           npm install
           npm install @capacitor/core @capacitor/cli @capacitor/android
-          npx cap init "GitHub APK Test" "com.cybertchak.githubapktest" --web-dir .
+
+      - name: Initialiser Capacitor
+        run: |
+          npx cap init "GitHub APK Test" "com.cybertchak.githubapktest" --web-dir www
 
       - name: Ajouter Android
         run: npx cap add android
