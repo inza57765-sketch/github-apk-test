@@ -21,7 +21,7 @@ jobs:
       - name: Installer Capacitor
         run: |
           npm install
-          npm install @capacitor/core @capacitor/cli
+          npm install @capacitor/core @capacitor/cli @capacitor/android
           npx cap init "GitHub APK Test" "com.cybertchak.githubapktest" --web-dir .
 
       - name: Ajouter Android
