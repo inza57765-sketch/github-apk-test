@@ -1,4 +1,4 @@
-name: Test Automatisation
+name: Build Android APK
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -18,11 +18,25 @@ jobs:
         with:
           node-version: 22
 
-      - name: Vérifier Node.js
-        run: node --version
+      - name: Installer Capacitor
+        run: |
+          npm install
+          npm install @capacitor/core @capacitor/cli
+          npx cap init "GitHub APK Test" "com.cybertchak.githubapktest" --web-dir .
 
-      - name: Installer les dépendances
-        run: npm install
+      - name: Ajouter Android
+        run: npx cap add android
 
-      - name: Lancer le build
-        run: npm run build
+      - name: Synchroniser Capacitor
+        run: npx cap sync android
+
+      - name: Construire APK
+        run: |
+          cd android
+          ./gradlew assembleDebug
+
+      - name: Publier APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: github-apk-test
+          path: android/app/build/outputs/apk/debug/app-debug.apk
