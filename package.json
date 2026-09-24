@@ -1,0 +1,7 @@
+{
+  "name": "github-apk-test",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "echo Build Web OK"
+  }
+}
